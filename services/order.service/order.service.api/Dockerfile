@@ -7,15 +7,14 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src/order
-COPY ["order.service.api/order.service.api.csproj", "order.service.api/"]
-RUN dotnet restore "./order.service.api/order.service.api.csproj"
+COPY ["order.service.api.csproj", "./"]
+RUN dotnet restore "./order.service.api.csproj"
 COPY . .
-WORKDIR "/src/order/order.service.api"
-RUN dotnet build "./order.service.api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "order.service.api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./order.service.api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "order.service.api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app/order

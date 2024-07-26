@@ -11,3 +11,4 @@
 .vs/store/v17/DocumentLayout.json
 services/*/.vs
 services/*/*/obj
+services/*/*/bin

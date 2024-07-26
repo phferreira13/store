@@ -11,47 +11,53 @@ services:
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq  
   
-  payments-service:
+  payment-service:
     build: 
-      context: ./services/payments.service
+      context: ./services/payment.service/payment.service.api
       dockerfile: Dockerfile
     expose:
       - "8080"
+    environment:
+      - BUILD_CONFIGURATION=Development
     ports:
       - "5000:8080"
-    container_name: online.store.payments-service
+    container_name: online.store.payment-service
     depends_on:
       - rabbitmq
     networks:
       - rabbitmq-network
     volumes:
-      - .:/app/payments/publish
+      - .:/app/payment/publish
       - ~/.aspnet/https:/https:ro
 
-  orders-service:
+  order-service:
     build: 
-      context: ./services/orders.service
+      context: ./services/order.service/order.service.api
       dockerfile: Dockerfile
     expose:
       - "8080"
+    environment:
+      - BUILD_CONFIGURATION=Development
     ports:
       - "5001:8080"
-    container_name: online.store.orders-service
+    container_name: online.store.order-service
     depends_on:
       - rabbitmq
     networks:
       - rabbitmq-network
     volumes:
-      - .:/app/orders/publish
+      - .:/app/order/publish
       - ~/.aspnet/https:/https:ro
     
   
   warehouse-service:
     build: 
-      context: ./services/warehouse.service
+      context: ./services/warehouse.service/warehouse.service.api
       dockerfile: Dockerfile
     expose:
       - "8080"
+    environment:
+      - BUILD_CONFIGURATION=Development
     ports:
       - "5002:8080"
     container_name: online.store.warehouse-service
@@ -65,10 +71,12 @@ services:
 
   delivery-service:
     build: 
-      context: ./services/delivery.service
+      context: ./services/delivery.service/delivery.service.api
       dockerfile: Dockerfile
     expose:
       - "8080"
+    environment:
+      - BUILD_CONFIGURATION=Development
     ports:
       - "5003:8080"
     container_name: online.store.delivery-service
