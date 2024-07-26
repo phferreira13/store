@@ -1,0 +1,13 @@
+﻿online.store/.vs
+*/obj
+*/.vs
+.vscode/settings.json
+*/bin
+.vs/ProjectSettings.json
+.vs/slnx.sqlite
+.vs/VSWorkspaceState.json
+.vs/store/FileContentIndex/46536501-ceb2-4ef3-88b4-e793daa931e5.vsidx
+.vs/store/v17/.wsuo
+.vs/store/v17/DocumentLayout.json
+services/*/.vs
+services/*/*/obj
