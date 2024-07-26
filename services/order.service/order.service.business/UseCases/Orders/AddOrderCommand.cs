@@ -47,7 +47,7 @@ namespace order.service.business.UseCases.Orders
                     {
                         throw new Exception($"Item with id {item.ItemId} not found.");
                     }
-                    order.Items.AddItem(itemEntity, item.Quantity);
+                    order.ItemList.AddItem(itemEntity, item.Quantity);
                 }
                 _orderRepository.Add(order);
                 return await Task.FromResult(order);
