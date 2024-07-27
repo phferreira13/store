@@ -30,5 +30,15 @@ namespace order.service.api.Controllers
             var order = await _mediator.Send(command);
             return CreatedAtAction(nameof(GetOrder), new { orderId = order.Id }, order);
         }
+
+        [HttpPut("{orderId}/items/{itemId}")]
+        [ProducesResponseType(typeof(Order), 200)]
+        public async Task<IActionResult> ChangeOrderItems([FromRoute] Guid orderId, [FromRoute] Guid itemId, [FromBody] ChangeOrderItemsCommand command)
+        {
+            command.SetOrderId(orderId);
+            command.SetItemId(itemId);
+            var order = await _mediator.Send(command);
+            return Ok(order);
+        }
     }
 }
