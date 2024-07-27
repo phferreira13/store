@@ -32,7 +32,7 @@ services:
 
   order-service:
     build: 
-      context: ./services/order.service/order.service.api
+      context: ./services/order.service
       dockerfile: Dockerfile
     expose:
       - "8080"
