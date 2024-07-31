@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using order.service.business.UseCases.Items;
 using order.service.business.UseCases.Orders;
 using order.service.domain.Models;
 
@@ -38,6 +39,22 @@ namespace order.service.api.Controllers
             command.SetOrderId(orderId);
             command.SetItemId(itemId);
             var order = await _mediator.Send(command);
+            return Ok(order);
+        }
+
+        [HttpGet("items")]
+        [ProducesResponseType(typeof(IEnumerable<Item>), 200)]
+        public async Task<IActionResult> GetAllItems()
+        {
+            var items = await _mediator.Send(new GetAllItemsQuery());
+            return Ok(items);
+        }
+
+        [HttpPost("{orderId}/proccess")]
+        [ProducesResponseType(typeof(Order), 200)]
+        public async Task<IActionResult> ProccessOrder([FromRoute] Guid orderId)
+        {
+            var order = await _mediator.Send(new ProccessOrderCommand(orderId));
             return Ok(order);
         }
     }
