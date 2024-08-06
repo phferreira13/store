@@ -10,5 +10,7 @@ namespace order.service.domain.Interfaces.Repositories
     public interface IItemRepository
     {
         Item? GetById(Guid itemId);
+        void Add(Item item);
+        IEnumerable<Item> GetAll();
     }
 }
