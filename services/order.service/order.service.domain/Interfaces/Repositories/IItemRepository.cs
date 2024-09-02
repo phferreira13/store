@@ -1,4 +1,5 @@
-﻿using order.service.domain.Models;
+﻿using order.service.domain.Dtos;
+using order.service.domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace order.service.domain.Interfaces.Repositories
 {
     public interface IItemRepository
     {
-        Item? GetById(Guid itemId);
-        void Add(Item item);
-        IEnumerable<Item> GetAll();
+        Task<ItemDto?> GetByIdAsync(Guid itemId);
+        void Add(ItemDto item);
+        Task<IEnumerable<ItemDto>> GetAll();
     }
 }

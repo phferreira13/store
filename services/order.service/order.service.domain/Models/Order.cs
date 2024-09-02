@@ -1,4 +1,5 @@
-﻿using order.service.domain.Enums;
+﻿using order.service.domain.Dtos;
+using order.service.domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,12 +41,12 @@ namespace order.service.domain.Models
 
         public class OrderItem
         {
-            public Item Item { get; private set; }
+            public ItemDto Item { get; private set; }
             public int Quantity { get; private set; }
             public DateTime AddedAt { get; private set; }
             public decimal Subtotal => Item.Price * Quantity;
 
-            public OrderItem(Item item, int quantity)
+            public OrderItem(ItemDto item, int quantity)
             {
                 Item = item;
                 Quantity = quantity;
@@ -68,7 +69,7 @@ namespace order.service.domain.Models
             public List<OrderItem> Items { get; private set; } = [];
             public decimal Total => Items.Sum(i => i.Subtotal);
 
-            public void AddItem(Item item, int quantity)
+            public void AddItem(ItemDto item, int quantity)
             {
                 var existingItem = Items.FirstOrDefault(i => i.Item.Id == item.Id);
                 if (existingItem != null)
@@ -81,7 +82,7 @@ namespace order.service.domain.Models
                 }
             }
 
-            public void RemoveItem(Item item, int quantity)
+            public void RemoveItem(ItemDto item, int quantity)
             {
                 var existingItem = Items.FirstOrDefault(i => i.Item.Id == item.Id);
                 if (existingItem != null)

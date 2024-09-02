@@ -2,7 +2,8 @@ using MediatR;
 using order.service.api.Ioc;
 using order.service.business.UseCases.Orders;
 using Microsoft.AspNetCore.OpenApi;
-using order.service.api.Mock;
+using order.service.http.HttpClients;
+using order.service.domain.Interfaces.HttpClients;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,24 +18,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssembly(typeof(AddOrderCommand).Assembly));
 
 builder.Services.AddRepositories();
-builder.Services.AddScoped<MockService>();
+
+builder.Services.AddHttpClient<IWarehouseHttpClient, WarehouseHttpClient>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-
-    var mockService = scope.ServiceProvider.GetRequiredService<MockService>();
-    mockService.SeedItems();
-}
-
 // Configure the HTTP request pipeline.
-    app.UseSwagger();
-    app.UseSwaggerUI();
-//if (app.Environment.IsDevelopment())
-//{
-//}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
