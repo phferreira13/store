@@ -8,7 +8,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src/order
 COPY . .
-#COPY ["order.service.api.csproj", "./"]
 RUN dotnet restore "order.service.api/order.service.api.csproj"
 COPY . .
 RUN dotnet build "order.service.api/order.service.api.csproj" -c $BUILD_CONFIGURATION -o /app/build
