@@ -52,7 +52,7 @@ services:
   
   warehouse-service:
     build: 
-      context: ./services/warehouse.service/warehouse.service.api
+      context: ./services/warehouse.service
       dockerfile: Dockerfile
     expose:
       - "8080"
