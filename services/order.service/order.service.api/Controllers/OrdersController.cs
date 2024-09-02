@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using order.service.business.UseCases.Items;
 using order.service.business.UseCases.Orders;
+using order.service.domain.Dtos;
 using order.service.domain.Models;
 
 namespace order.service.api.Controllers
@@ -43,7 +44,7 @@ namespace order.service.api.Controllers
         }
 
         [HttpGet("items")]
-        [ProducesResponseType(typeof(IEnumerable<Item>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<ItemDto>), 200)]
         public async Task<IActionResult> GetAllItems()
         {
             var items = await _mediator.Send(new GetAllItemsQuery());

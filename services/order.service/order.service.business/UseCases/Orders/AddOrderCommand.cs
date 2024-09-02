@@ -42,7 +42,7 @@ namespace order.service.business.UseCases.Orders
                 Order order = request;
                 foreach (var item in request.Items)
                 {
-                    var itemEntity = _itemRepository.GetById(item.ItemId);
+                    var itemEntity = await _itemRepository.GetByIdAsync(item.ItemId);
                     if (itemEntity == null)
                     {
                         throw new Exception($"Item with id {item.ItemId} not found.");
@@ -50,7 +50,7 @@ namespace order.service.business.UseCases.Orders
                     order.ItemList.AddItem(itemEntity, item.Quantity);
                 }
                 _orderRepository.Add(order);
-                return await Task.FromResult(order);
+                return order;
             }
         }
     }    

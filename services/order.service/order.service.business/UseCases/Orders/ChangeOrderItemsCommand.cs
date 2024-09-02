@@ -34,7 +34,7 @@ namespace order.service.business.UseCases.Orders
                 var order = _orderRepository.GetById(request.OrderId)
                     ?? throw new Exception($"Order with id {request.OrderId} not found.");
 
-                var item = _itemRepository.GetById(request.ItemId) 
+                var item = await _itemRepository.GetByIdAsync(request.ItemId) 
                     ?? throw new Exception($"Item with id {request.ItemId} not found.");
 
                 if (request.Quantity < 0)
@@ -47,7 +47,7 @@ namespace order.service.business.UseCases.Orders
                 }
 
                 _orderRepository.Update(order);
-                return await Task.FromResult(order);
+                return order;
             }
         }
 
