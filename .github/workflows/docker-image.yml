@@ -18,7 +18,7 @@ jobs:
     - name: Get commit tag
       id: get_tag
       run: |
-        SHA=$(echo $GITHUB_SHA | head -c 7)
+        SHA=$(echo $GITHUB_SHA | head -c7)
         echo "sha=$SHA" >> $GITHUB_OTUPUT
 
     - name: Build the Docker image - Order Service
