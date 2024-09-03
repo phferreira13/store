@@ -14,5 +14,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+    - name: Build the Docker image - Order Service
+      run: docker build . --file services\order.service\Dockerfile --tag order-service-api:$(date +%s)
