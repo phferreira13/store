@@ -16,4 +16,4 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Build the Docker image - Order Service
-      run: docker build . --file services\order.service\Dockerfile --tag order-service-api:$(date +%s)
+      run: docker build . --file services/order.service/Dockerfile --tag order-service-api:$(date +%s)
