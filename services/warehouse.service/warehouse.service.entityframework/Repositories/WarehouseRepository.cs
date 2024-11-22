@@ -1,63 +1,86 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using warehouse.service.domain.Interfaces.Repositories;
 using warehouse.service.domain.Models;
+using warehouse.service.entityframework.Context;
 
 namespace warehouse.service.entityframewor.Repositories;
 
 public class WarehouseRepository : IWarehouseRepository
 {
-    private List<Warehouse> _warehouses = [];
+    private readonly WarehouseContext _context;
 
-    public WarehouseRepository()
-    { }
+    public WarehouseRepository(WarehouseContext context)
+    {
+        _context = context;
+    }
 
     public Warehouse? GetWarehouse(Guid id)
     {
-        return _warehouses.FirstOrDefault(x => x.Id == id);
+        return _context.Warehouses.FirstOrDefault(x => x.Id == id);
     }
 
     public IEnumerable<Warehouse> GetWarehouses()
     {
-        return _warehouses;
+        return _context.Warehouses.ToList();
     }
 
     public void AddWarehouse(Warehouse warehouse)
     {
-        _warehouses.Add(warehouse);
+        _context.Warehouses.Add(warehouse);
+        _context.SaveChanges();
     }
 
     public void UpdateWarehouse(Guid id, string name, string location)
     {
         var warehouse = GetWarehouse(id);
-        warehouse?.Update(name, location);
+        if (warehouse != null)
+        {
+            warehouse.Update(name, location);
+            _context.SaveChanges();
+        }
     }
 
     public void AddItem(Guid warehouseId, Item item, int quantity)
     {
         var warehouse = GetWarehouse(warehouseId);
-        warehouse?.AddItem(item, quantity);
+        if (warehouse != null)
+        {
+            warehouse.AddItem(item, quantity);
+            _context.SaveChanges();
+        }
     }
 
     public void IncreaseItemQuantity(Guid warehouseId, Guid itemId, int quantity = 1)
     {
         var warehouse = GetWarehouse(warehouseId);
-        warehouse?.IncreaseItemQuantity(itemId, quantity);
+        if (warehouse != null)
+        {
+            warehouse.IncreaseItemQuantity(itemId, quantity);
+            _context.SaveChanges();
+        }
     }
 
     public void DecreaseItemQuantity(Guid warehouseId, Guid itemId, int quantity = 1)
     {
         var warehouse = GetWarehouse(warehouseId);
-        warehouse?.DecreaseItemQuantity(itemId, quantity);
+        if (warehouse != null)
+        {
+            warehouse.DecreaseItemQuantity(itemId, quantity);
+            _context.SaveChanges();
+        }
     }
 
     public void DeleteWarehouse(Guid id)
     {
         var warehouse = GetWarehouse(id);
         if (warehouse != null)
-            _warehouses.Remove(warehouse);
+        {
+            _context.Warehouses.Remove(warehouse);
+            _context.SaveChanges();
+        }
     }
 }

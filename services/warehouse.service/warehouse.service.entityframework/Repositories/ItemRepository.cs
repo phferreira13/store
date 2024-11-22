@@ -1,45 +1,56 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using warehouse.service.domain.Interfaces.Repositories;
 using warehouse.service.domain.Models;
+using warehouse.service.entityframework.Context;
 
 namespace warehouse.service.entityframewor.Repositories;
 
 public class ItemRepository : IItemRepository
 {
-    private List<Item> _items = [];
+    private readonly WarehouseContext _context;
 
-    public ItemRepository()
-    { }
+    public ItemRepository(WarehouseContext context)
+    {
+        _context = context;
+    }
 
     public Item? GetItem(Guid id)
     {
-        return _items.FirstOrDefault(x => x.Id == id);
+        return _context.Items.FirstOrDefault(x => x.Id == id);
     }
 
     public IEnumerable<Item> GetItems()
     {
-        return _items;
+        return _context.Items.ToList();
     }
 
     public void AddItem(Item item)
     {
-        _items.Add(item);
+        _context.Items.Add(item);
+        _context.SaveChanges();
     }
 
     public void UpdateItem(Guid id, string name, decimal price, string description)
     {
         var item = GetItem(id);
-        item?.Update(name, price, description);
+        if (item != null)
+        {
+            item.Update(name, price, description);
+            _context.SaveChanges();
+        }
     }
 
     public void DeleteItem(Guid id)
     {
         var item = GetItem(id);
         if (item != null)
-            _items.Remove(item);
+        {
+            _context.Items.Remove(item);
+            _context.SaveChanges();
+        }
     }
 }
