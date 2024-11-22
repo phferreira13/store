@@ -6,12 +6,12 @@ namespace warehouse.service.api.Mock
     {
         private readonly IItemRepository _itemRepository = itemRepository;
 
-        public void SeedItems()
+        public async Task SeedItems()
         {
             var items = ItemFactory.CreateItems(10);
             foreach (var item in items)
             {
-                _itemRepository.AddItem(item);
+                await _itemRepository.AddItem(item);
             }
         }
     }

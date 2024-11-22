@@ -23,13 +23,13 @@ namespace warehouse.service.business.UseCases.Warehouses
 
         internal class Handler(IWarehouseRepository warehouseRepository, IItemRepository itemRepository) : IRequestHandler<CreateWarehouseCommand, Warehouse>
         {
-            public Task<Warehouse> Handle(CreateWarehouseCommand request, CancellationToken cancellationToken)
+            public async Task<Warehouse> Handle(CreateWarehouseCommand request, CancellationToken cancellationToken)
             {
                 var warehouse = new Warehouse(request.Name, request.Location);
 
                 foreach (var item in request.Items)
                 {
-                    var itemEntity = itemRepository.GetItem(item.Item);
+                    var itemEntity = await itemRepository.GetItem(item.Item);
                     if (itemEntity == null)
                     {
                         throw new ArgumentException($"Item with id {item.Item} not found");
@@ -38,9 +38,9 @@ namespace warehouse.service.business.UseCases.Warehouses
                     warehouse.AddItem(itemEntity, item.Quantity);
                 }
 
-                warehouseRepository.AddWarehouse(warehouse);
+                await warehouseRepository.AddWarehouse(warehouse);
 
-                return Task.FromResult(warehouse);
+                return warehouse;
             }
         }
     }

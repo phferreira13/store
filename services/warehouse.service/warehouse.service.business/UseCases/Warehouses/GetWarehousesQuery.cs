@@ -13,10 +13,9 @@ namespace warehouse.service.business.UseCases.Warehouses
     {
         internal class Handler(IWarehouseRepository warehouseRepository) : IRequestHandler<GetWarehousesQuery, IEnumerable<Warehouse>>
         {
-            public Task<IEnumerable<Warehouse>> Handle(GetWarehousesQuery request, CancellationToken cancellationToken)
+            public async Task<IEnumerable<Warehouse>> Handle(GetWarehousesQuery request, CancellationToken cancellationToken)
             {
-                var warehouses = warehouseRepository.GetWarehouses();
-                return Task.FromResult(warehouses);
+                return await warehouseRepository.GetWarehouses();
             }
         }
     }

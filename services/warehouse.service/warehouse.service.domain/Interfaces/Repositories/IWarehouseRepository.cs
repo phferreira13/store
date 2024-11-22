@@ -9,13 +9,13 @@ namespace warehouse.service.domain.Interfaces.Repositories
 {
     public interface IWarehouseRepository
     {
-        Warehouse? GetWarehouse(Guid id);
-        IEnumerable<Warehouse> GetWarehouses();
-        void AddWarehouse(Warehouse warehouse);
-        void UpdateWarehouse(Guid id, string name, string location);
-        void AddItem(Guid warehouseId, Item item, int quantity);
-        void IncreaseItemQuantity(Guid warehouseId, Guid itemId, int quantity = 1);
-        void DecreaseItemQuantity(Guid warehouseId, Guid itemId, int quantity = 1);
-        void DeleteWarehouse(Guid id);
+        Task<Warehouse?> GetWarehouse(Guid id);
+        Task<IEnumerable<Warehouse>> GetWarehouses();
+        Task AddWarehouse(Warehouse warehouse);
+        Task UpdateWarehouse(Guid id, string name, string location);
+        Task AddItem(Guid warehouseId, Item item, int quantity);
+        Task IncreaseItemQuantity(Guid warehouseId, Guid itemId, int quantity = 1);
+        Task DecreaseItemQuantity(Guid warehouseId, Guid itemId, int quantity = 1);
+        Task DeleteWarehouse(Guid id);
     }
 }

@@ -18,9 +18,9 @@ namespace warehouse.service.business.UseCases.Warehouses
 
         internal class Handler(IWarehouseRepository warehouseRepository, IItemRepository itemRepository) : IRequestHandler<ChangeWarehouseItemQuantityCommand, Warehouse>
         {
-            public Task<Warehouse> Handle(ChangeWarehouseItemQuantityCommand request, CancellationToken cancellationToken)
+            public async Task<Warehouse> Handle(ChangeWarehouseItemQuantityCommand request, CancellationToken cancellationToken)
             {
-                var warehouse = warehouseRepository.GetWarehouse(request._warehouseId);
+                var warehouse = await warehouseRepository.GetWarehouse(request._warehouseId);
                 if (warehouse == null)
                 {
                     throw new ArgumentException($"Warehouse with id {request._warehouseId} not found");
@@ -35,10 +35,10 @@ namespace warehouse.service.business.UseCases.Warehouses
                     }
                     else
                     {
-                        var itemEntity = itemRepository.GetItem(request.ItemId) 
+                        var itemEntity = await itemRepository.GetItem(request.ItemId) 
                             ?? throw new ArgumentException($"Item with id {request.ItemId} not found");
                         warehouse.AddItem(itemEntity, request.Quantity);
-                        return Task.FromResult(warehouse);
+                        return warehouse;
                     }
                 }
 
@@ -51,7 +51,7 @@ namespace warehouse.service.business.UseCases.Warehouses
                     warehouse.IncreaseItemQuantity(request.ItemId, request.Quantity);
                 }
 
-                return Task.FromResult(warehouse);
+                return warehouse;
             }
         }
     }
