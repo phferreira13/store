@@ -1,5 +1,5 @@
 ﻿using order.service.domain.Interfaces.Repositories;
-using order.service.domain.Repositories;
+using order.service.entityframework.Repositories;
 
 namespace order.service.api.Ioc
 {
@@ -7,8 +7,8 @@ namespace order.service.api.Ioc
     {
         public static void AddRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<IOrderRepository, OrderRepository>();
-            services.AddSingleton<IItemRepository, ItemRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IItemRepository, ItemRepository>();
         }
     }
 }
