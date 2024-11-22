@@ -1,6 +1,7 @@
 using warehouse.service.api.Ioc;
 using warehouse.service.api.Mock;
 using warehouse.service.business.UseCases.Items;
+using warehouse.service.entityframework.Bootstrapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddMediatR(c => c.RegisterServicesFromAssembly(typeof(GetItemsQ
 
 builder.Services.AddRepositories();
 builder.Services.AddScoped<MockService>();
+
+builder.Services.AddEntityFramework(builder.Configuration);
 
 var app = builder.Build();
 

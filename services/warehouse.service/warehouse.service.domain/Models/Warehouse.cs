@@ -15,10 +15,11 @@ namespace warehouse.service.domain.Models
         public DateTime? UpdatedAt { get; private set; }
         public List<WarehouseItem> Items { get; private set; } = [];
 
-        public class WarehouseItem(Item item, int quantity)
+        public class WarehouseItem(Guid itemId, int quantity)
         {
             public Guid Id { get; private set; } = Guid.NewGuid();
-            public Item Item { get; private set; } = item;
+            public Guid ItemId { get; private set; } = itemId;
+            public Item Item { get; private set; }
             public int Quantity { get; private set; } = quantity;
             public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
             public DateTime? UpdatedAt { get; private set; }
@@ -27,6 +28,11 @@ namespace warehouse.service.domain.Models
             {
                 Quantity = quantity;
                 UpdatedAt = DateTime.UtcNow;
+            }
+
+            public WarehouseItem(Item item, int quantity) : this(item.Id, quantity)
+            {
+                Item = item;
             }
         }
 

@@ -11,6 +11,10 @@
   <ItemGroup>
     <PackageReference Include="Bogus" Version="35.6.0" />
     <PackageReference Include="MediatR" Version="12.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
@@ -18,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\warehouse.service.business\warehouse.service.business.csproj" />
     <ProjectReference Include="..\warehouse.service.domain\warehouse.service.domain.csproj" />
+    <ProjectReference Include="..\warehouse.service.entityframework\warehouse.service.entityframework.csproj" />
   </ItemGroup>
 
 </Project>
