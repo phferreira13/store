@@ -1,8 +1,4 @@
-﻿using MediatR;
-using warehouse.service.domain.Interfaces.Repositories;
-using warehouse.service.domain.Models;
-
-namespace warehouse.service.business.UseCases.Items;
+﻿namespace warehouse.service.business.UseCases.Items;
 public class CreateItemCommand : IRequest<Item>
 {
     public string Name { get; set; }

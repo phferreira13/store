@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using warehouse.service.domain.Models;
+﻿using warehouse.service.domain.Models;
 
 namespace warehouse.service.domain.Interfaces.Repositories
 {

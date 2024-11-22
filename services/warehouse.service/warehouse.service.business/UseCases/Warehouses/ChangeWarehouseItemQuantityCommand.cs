@@ -1,13 +1,4 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using warehouse.service.domain.Interfaces.Repositories;
-using warehouse.service.domain.Models;
-
-namespace warehouse.service.business.UseCases.Warehouses
+﻿namespace warehouse.service.business.UseCases.Warehouses
 {
     public class ChangeWarehouseItemQuantityCommand : IRequest<Warehouse>
     {
@@ -35,7 +26,7 @@ namespace warehouse.service.business.UseCases.Warehouses
                     }
                     else
                     {
-                        var itemEntity = await itemRepository.GetItem(request.ItemId) 
+                        var itemEntity = await itemRepository.GetItem(request.ItemId)
                             ?? throw new ArgumentException($"Item with id {request.ItemId} not found");
                         warehouse.AddItem(itemEntity.Id, request.Quantity);
                         return warehouse;

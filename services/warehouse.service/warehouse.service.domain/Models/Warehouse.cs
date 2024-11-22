@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace warehouse.service.domain.Models
+﻿namespace warehouse.service.domain.Models
 {
     public class Warehouse(string name, string location)
     {

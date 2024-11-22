@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using warehouse.service.domain.Interfaces.Repositories;
 using warehouse.service.domain.Models;
@@ -45,7 +40,8 @@ public class ItemRepository : IItemRepository
             {
                 await _context.SaveChangesAsync();
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

@@ -9,7 +9,7 @@ namespace warehouse.service.api.Mock
         {
             var faker = new Faker<Item>(locale: "pt_BR")
                 .CustomInstantiator(f => new Item(
-                    name: f.Commerce.ProductName(), 
+                    name: f.Commerce.ProductName(),
                     price: Math.Round(f.Random.Decimal(1, 1000), 2),
                     description: f.Lorem.Sentence())
                 );
