@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using warehouse.service.domain.Interfaces.Repositories;
 using warehouse.service.domain.Models;
 using warehouse.service.entityframework.Context;
@@ -18,69 +19,69 @@ public class WarehouseRepository : IWarehouseRepository
         _context = context;
     }
 
-    public Warehouse? GetWarehouse(Guid id)
+    public async Task<Warehouse?> GetWarehouse(Guid id)
     {
-        return _context.Warehouses.FirstOrDefault(x => x.Id == id);
+        return await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public IEnumerable<Warehouse> GetWarehouses()
+    public async Task<IEnumerable<Warehouse>> GetWarehouses()
     {
-        return _context.Warehouses.ToList();
+        return await _context.Warehouses.ToListAsync();
     }
 
-    public void AddWarehouse(Warehouse warehouse)
+    public async Task AddWarehouse(Warehouse warehouse)
     {
         _context.Warehouses.Add(warehouse);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public void UpdateWarehouse(Guid id, string name, string location)
+    public async Task UpdateWarehouse(Guid id, string name, string location)
     {
-        var warehouse = GetWarehouse(id);
+        var warehouse = await GetWarehouse(id);
         if (warehouse != null)
         {
             warehouse.Update(name, location);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 
-    public void AddItem(Guid warehouseId, Item item, int quantity)
+    public async Task AddItem(Guid warehouseId, Item item, int quantity)
     {
-        var warehouse = GetWarehouse(warehouseId);
+        var warehouse = await GetWarehouse(warehouseId);
         if (warehouse != null)
         {
             warehouse.AddItem(item, quantity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 
-    public void IncreaseItemQuantity(Guid warehouseId, Guid itemId, int quantity = 1)
+    public async Task IncreaseItemQuantity(Guid warehouseId, Guid itemId, int quantity = 1)
     {
-        var warehouse = GetWarehouse(warehouseId);
+        var warehouse = await GetWarehouse(warehouseId);
         if (warehouse != null)
         {
             warehouse.IncreaseItemQuantity(itemId, quantity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 
-    public void DecreaseItemQuantity(Guid warehouseId, Guid itemId, int quantity = 1)
+    public async Task DecreaseItemQuantity(Guid warehouseId, Guid itemId, int quantity = 1)
     {
-        var warehouse = GetWarehouse(warehouseId);
+        var warehouse = await GetWarehouse(warehouseId);
         if (warehouse != null)
         {
             warehouse.DecreaseItemQuantity(itemId, quantity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 
-    public void DeleteWarehouse(Guid id)
+    public async Task DeleteWarehouse(Guid id)
     {
-        var warehouse = GetWarehouse(id);
+        var warehouse = await GetWarehouse(id);
         if (warehouse != null)
         {
             _context.Warehouses.Remove(warehouse);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
