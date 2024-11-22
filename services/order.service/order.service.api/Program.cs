@@ -4,7 +4,6 @@ using order.service.business.UseCases.Orders;
 using Microsoft.AspNetCore.OpenApi;
 using order.service.http.HttpClients;
 using order.service.domain.Interfaces.HttpClients;
-using order.service.entityframework.Bootstrapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +20,6 @@ builder.Services.AddMediatR(c => c.RegisterServicesFromAssembly(typeof(AddOrderC
 builder.Services.AddRepositories();
 
 builder.Services.AddHttpClient<IWarehouseHttpClient, WarehouseHttpClient>();
-
-builder.Services.AddEntityFramework(builder.Configuration);
 
 var app = builder.Build();
 
