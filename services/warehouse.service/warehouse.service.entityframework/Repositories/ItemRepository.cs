@@ -19,9 +19,9 @@ public class ItemRepository : IItemRepository
         _context = context;
     }
 
-    public async Task<Item?> GetItem(Guid id)
+    public async Task<Item?> GetItem(int id)
     {
-        return await _context.Items.FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.Items.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<IEnumerable<Item>> GetItems()
@@ -35,17 +35,26 @@ public class ItemRepository : IItemRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateItem(Guid id, string name, decimal price, string description)
+    public async Task UpdateItem(int id, string name, decimal price, string description)
     {
-        var item = await GetItem(id);
+        var item = await _context.Items.FindAsync(id);
         if (item != null)
         {
             item.Update(name, price, description);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+
+            } catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+
         }
     }
 
-    public async Task DeleteItem(Guid id)
+    public async Task DeleteItem(int id)
     {
         var item = await GetItem(id);
         if (item != null)
@@ -53,5 +62,11 @@ public class ItemRepository : IItemRepository
             _context.Items.Remove(item);
             await _context.SaveChangesAsync();
         }
+    }
+
+    public async Task UpdateItem(Item item)
+    {
+        _context.Items.Update(item);
+        await _context.SaveChangesAsync();
     }
 }

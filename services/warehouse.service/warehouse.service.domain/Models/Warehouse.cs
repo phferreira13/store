@@ -8,21 +8,21 @@ namespace warehouse.service.domain.Models
 {
     public class Warehouse(string name, string location)
     {
-        public Guid Id { get; private set; } = Guid.NewGuid();
+        public int Id { get; private set; }
         public string Name { get; private set; } = name;
         public string Location { get; private set; } = location;
         public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; private set; }
         public List<WarehouseItem> Items { get; private set; } = [];
 
-        public class WarehouseItem(Guid itemId, int quantity)
+        public class WarehouseItem(int itemId, int quantity)
         {
-            public Guid Id { get; private set; } = Guid.NewGuid();
-            public Guid ItemId { get; private set; } = itemId;
-            public Item Item { get; private set; }
+            public int Id { get; private set; }
+            public int ItemId { get; private set; } = itemId;
             public int Quantity { get; private set; } = quantity;
             public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
             public DateTime? UpdatedAt { get; private set; }
+            public virtual Item Item { get; private set; }
 
             public void Update(int quantity)
             {
@@ -43,12 +43,12 @@ namespace warehouse.service.domain.Models
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public void AddItem(Item item, int quantity)
+        public void AddItem(int item, int quantity)
         {
             Items.Add(new WarehouseItem(item, quantity));
         }
 
-        public void IncreaseItemQuantity(Guid itemId, int quantity = 1)
+        public void IncreaseItemQuantity(int itemId, int quantity = 1)
         {
             if (quantity < 1)
             {
@@ -59,7 +59,7 @@ namespace warehouse.service.domain.Models
             item?.Update(item.Quantity + quantity);
         }
 
-        public void DecreaseItemQuantity(Guid itemId, int quantity = 1)
+        public void DecreaseItemQuantity(int itemId, int quantity = 1)
         {
             if (quantity < 1)
             {
@@ -70,7 +70,7 @@ namespace warehouse.service.domain.Models
             item?.Update(item.Quantity - quantity);
         }
 
-        public WarehouseItem? GetWarehouseItem(Guid itemId)
+        public WarehouseItem? GetWarehouseItem(int itemId)
         {
             return Items.FirstOrDefault(i => i.Item.Id == itemId);
         }

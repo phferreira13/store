@@ -7,7 +7,9 @@ public class WarehouseConfiguration : IEntityTypeConfiguration<Warehouse>
 {
     public void Configure(EntityTypeBuilder<Warehouse> builder)
     {
+        builder.ToTable("Warehouses");
         builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).ValueGeneratedOnAdd();
         builder.Property(x => x.Name).IsRequired();
         builder.Property(x => x.Location).IsRequired();
         builder.Property(x => x.CreatedAt).IsRequired();
@@ -16,6 +18,7 @@ public class WarehouseConfiguration : IEntityTypeConfiguration<Warehouse>
         builder.OwnsMany(x => x.Items, warehouseItem =>
         {
             warehouseItem.HasKey(x => x.Id);
+            warehouseItem.Property(x => x.Id).ValueGeneratedOnAdd();
             warehouseItem.Property(x => x.Quantity).IsRequired();
             warehouseItem.Property(x => x.CreatedAt).IsRequired();
             warehouseItem.Property(x => x.UpdatedAt);

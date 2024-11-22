@@ -7,7 +7,10 @@ public class ItemConfiguration : IEntityTypeConfiguration<Item>
 {
     public void Configure(EntityTypeBuilder<Item> builder)
     {
+        builder.ToTable("Items");
+
         builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).ValueGeneratedOnAdd();
         builder.Property(x => x.Name).IsRequired();
         builder.Property(x => x.Price).IsRequired();
         builder.Property(x => x.Description).IsRequired();
@@ -17,6 +20,7 @@ public class ItemConfiguration : IEntityTypeConfiguration<Item>
         builder.OwnsMany(x => x.History, history =>
         {
             history.HasKey(x => x.Id);
+            history.Property(x => x.Id).ValueGeneratedOnAdd();
             history.Property(x => x.Name).IsRequired();
             history.Property(x => x.Price).IsRequired();
             history.Property(x => x.Description).IsRequired();

@@ -9,10 +9,11 @@ namespace warehouse.service.domain.Interfaces.Repositories
 {
     public interface IItemRepository
     {
-        Task<Item?> GetItem(Guid id);
+        Task<Item?> GetItem(int id);
         Task<IEnumerable<Item>> GetItems();
         Task AddItem(Item item);
-        Task UpdateItem(Guid id, string name, decimal price, string description);
-        Task DeleteItem(Guid id);
+        Task UpdateItem(int id, string name, decimal price, string description);
+        Task DeleteItem(int id);
+        Task UpdateItem(Item item);
     }
 }

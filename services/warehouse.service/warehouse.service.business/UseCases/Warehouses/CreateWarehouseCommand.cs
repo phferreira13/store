@@ -17,7 +17,7 @@ namespace warehouse.service.business.UseCases.Warehouses
 
         public class AddWarehouseItemCommand
         {
-            public Guid Item { get; set; }
+            public int ItemId { get; set; }
             public int Quantity { get; set; }
         }
 
@@ -29,13 +29,7 @@ namespace warehouse.service.business.UseCases.Warehouses
 
                 foreach (var item in request.Items)
                 {
-                    var itemEntity = await itemRepository.GetItem(item.Item);
-                    if (itemEntity == null)
-                    {
-                        throw new ArgumentException($"Item with id {item.Item} not found");
-                    }
-
-                    warehouse.AddItem(itemEntity, item.Quantity);
+                    warehouse.AddItem(item.ItemId, item.Quantity);
                 }
 
                 await warehouseRepository.AddWarehouse(warehouse);

@@ -25,4 +25,8 @@
     <ProjectReference Include="..\warehouse.service.domain\warehouse.service.domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

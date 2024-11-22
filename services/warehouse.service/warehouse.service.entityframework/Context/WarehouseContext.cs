@@ -9,9 +9,11 @@ public class WarehouseContext : DbContext
     }
 
     public DbSet<Item> Items { get; set; }
+    public DbSet<Warehouse> Warehouses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema("warehouse");
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(WarehouseContext).Assembly);
     }
 }

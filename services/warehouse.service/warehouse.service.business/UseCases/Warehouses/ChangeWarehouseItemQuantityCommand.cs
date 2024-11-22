@@ -11,9 +11,9 @@ namespace warehouse.service.business.UseCases.Warehouses
 {
     public class ChangeWarehouseItemQuantityCommand : IRequest<Warehouse>
     {
-        private Guid _warehouseId;
-        public void SetWarehouseId(Guid warehouseId) => _warehouseId = warehouseId;
-        public Guid ItemId { get; set; }
+        private int _warehouseId;
+        public void SetWarehouseId(int warehouseId) => _warehouseId = warehouseId;
+        public int ItemId { get; set; }
         public int Quantity { get; set; }
 
         internal class Handler(IWarehouseRepository warehouseRepository, IItemRepository itemRepository) : IRequestHandler<ChangeWarehouseItemQuantityCommand, Warehouse>
@@ -37,7 +37,7 @@ namespace warehouse.service.business.UseCases.Warehouses
                     {
                         var itemEntity = await itemRepository.GetItem(request.ItemId) 
                             ?? throw new ArgumentException($"Item with id {request.ItemId} not found");
-                        warehouse.AddItem(itemEntity, request.Quantity);
+                        warehouse.AddItem(itemEntity.Id, request.Quantity);
                         return warehouse;
                     }
                 }
