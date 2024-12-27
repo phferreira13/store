@@ -18,5 +18,31 @@ namespace warehouse.service.api.Controllers
             var items = await _mediator.Send(new GetItemsQuery());
             return Ok(items);
         }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Item), 200)]
+        public async Task<IActionResult> GetItemById(int id)
+        {
+            var item = await _mediator.Send(new GetItemByIdQuery { Id = id });
+            return Ok(item);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(Item), 201)]
+        public async Task<IActionResult> CreateItem([FromBody] CreateItemCommand command)
+        {
+            var item = await _mediator.Send(command);
+            return Ok(item);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        public async Task<IActionResult> UpdateItem(int id, [FromBody] UpdateItemCommand command)
+        {
+            await _mediator.Send(command.SetId(id));
+            return NoContent();
+        }
+
+
     }
 }

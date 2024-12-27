@@ -1,5 +1,5 @@
 ﻿using warehouse.service.domain.Interfaces.Repositories;
-using warehouse.service.domain.Repositories;
+using warehouse.service.entityframewor.Repositories;
 
 namespace warehouse.service.api.Ioc
 {
@@ -7,8 +7,8 @@ namespace warehouse.service.api.Ioc
     {
         public static void AddRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<IWarehouseRepository, WarehouseRepository>();
-            services.AddSingleton<IItemRepository, ItemRepository>();
+            services.AddScoped<IWarehouseRepository, WarehouseRepository>();
+            services.AddScoped<IItemRepository, ItemRepository>();
         }
     }
 }

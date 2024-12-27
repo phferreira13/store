@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using warehouse.service.domain.Models;
+﻿using warehouse.service.domain.Models;
 
 namespace warehouse.service.domain.Interfaces.Repositories
 {
     public interface IWarehouseRepository
     {
-        Warehouse? GetWarehouse(Guid id);
-        IEnumerable<Warehouse> GetWarehouses();
-        void AddWarehouse(Warehouse warehouse);
-        void UpdateWarehouse(Guid id, string name, string location);
-        void AddItem(Guid warehouseId, Item item, int quantity);
-        void IncreaseItemQuantity(Guid warehouseId, Guid itemId, int quantity = 1);
-        void DecreaseItemQuantity(Guid warehouseId, Guid itemId, int quantity = 1);
-        void DeleteWarehouse(Guid id);
+        Task<Warehouse?> GetWarehouse(int id);
+        Task<IEnumerable<Warehouse>> GetWarehouses();
+        Task AddWarehouse(Warehouse warehouse);
+        Task UpdateWarehouse(int id, string name, string location);
+        Task AddItem(int warehouseId, Item item, int quantity);
+        Task IncreaseItemQuantity(int warehouseId, int itemId, int quantity = 1);
+        Task DecreaseItemQuantity(int warehouseId, int itemId, int quantity = 1);
+        Task DeleteWarehouse(int id);
+        Task UpdateWarehouse(Warehouse warehouse);
     }
 }
