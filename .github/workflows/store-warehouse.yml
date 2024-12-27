@@ -18,7 +18,7 @@ env:
   API_IMPORT_VERSION: v1
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 9.0.x
-  WORKING_DIRECTORY: warehouse.service.api
+  WORKING_DIRECTORY: services\warehouse.service\warehouse.service.api
 jobs:
   build:
     runs-on: windows-latest
