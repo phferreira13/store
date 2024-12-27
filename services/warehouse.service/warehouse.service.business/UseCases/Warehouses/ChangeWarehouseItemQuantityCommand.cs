@@ -9,6 +9,7 @@
 
         internal class Handler(IWarehouseRepository warehouseRepository, IItemRepository itemRepository) : IRequestHandler<ChangeWarehouseItemQuantityCommand, Warehouse>
         {
+
             public async Task<Warehouse> Handle(ChangeWarehouseItemQuantityCommand request, CancellationToken cancellationToken)
             {
                 var warehouse = await warehouseRepository.GetWarehouse(request._warehouseId);
@@ -28,19 +29,20 @@
                     {
                         var itemEntity = await itemRepository.GetItem(request.ItemId)
                             ?? throw new ArgumentException($"Item with id {request.ItemId} not found");
-                        warehouse.AddItem(itemEntity.Id, request.Quantity);
+                        await warehouseRepository.AddItem(request._warehouseId, itemEntity, request.Quantity);
                         return warehouse;
                     }
                 }
 
                 if (request.Quantity < 0)
                 {
-                    warehouse.DecreaseItemQuantity(request.ItemId, Math.Abs(request.Quantity));
+                    await warehouseRepository.DecreaseItemQuantity(request._warehouseId, request.ItemId, Math.Abs(request.Quantity));
                 }
                 else
                 {
-                    warehouse.IncreaseItemQuantity(request.ItemId, request.Quantity);
+                    await warehouseRepository.IncreaseItemQuantity(request._warehouseId, request.ItemId, request.Quantity);
                 }
+                
 
                 return warehouse;
             }
