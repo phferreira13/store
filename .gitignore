@@ -12,3 +12,5 @@
 services/*/.vs
 services/*/*/obj
 services/*/*/bin
+/warehouse.service.api/publish
+/services/warehouse.service/warehouse.service.api/publish
