@@ -11,9 +11,16 @@ public static class EFCoreBootstrapper
     {
         services.AddDbContext<WarehouseContext>(options =>
         {
-            options.UseSqlServer(configuration.GetConnectionString("SQLServerConnection"));
+            options.UseSqlServer(configuration.GetConnectionString("SQLServerConnection"));            
         });
 
         return services;
+    }
+
+    public static void ApplyMigration(this IServiceProvider serviceProvider)
+    {
+        using var scope = serviceProvider.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<WarehouseContext>();
+        context.Database.Migrate();
     }
 }
