@@ -14,23 +14,23 @@ public class ItemRepository : IItemRepository
         _context = context;
     }
 
-    public async Task<Item?> GetItem(int id)
+    public async Task<Item?> GetItemAsync(int id)
     {
         return await _context.Items.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<IEnumerable<Item>> GetItems()
+    public async Task<IEnumerable<Item>> GetItemsAsync()
     {
         return await _context.Items.ToListAsync();
     }
 
-    public async Task AddItem(Item item)
+    public async Task AddItemAsync(Item item)
     {
         _context.Items.Add(item);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateItem(int id, string name, decimal price, string description)
+    public async Task UpdateItemAsync(int id, string name, decimal price, string description)
     {
         var item = await _context.Items.FindAsync(id);
         if (item != null)
@@ -50,7 +50,7 @@ public class ItemRepository : IItemRepository
         }
     }
 
-    public async Task DeleteItem(int id)
+    public async Task DeleteItemAsync(int id)
     {
         var item = await _context.Items.FindAsync(id);
         if (item != null)
@@ -61,7 +61,7 @@ public class ItemRepository : IItemRepository
     }
 
 
-    public async Task UpdateItem(Item item)
+    public async Task UpdateItemAsync(Item item)
     {
         _context.Items.Update(item);
         await _context.SaveChangesAsync();

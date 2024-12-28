@@ -6,7 +6,7 @@
         {
             public async Task<IEnumerable<Warehouse>> Handle(GetWarehousesQuery request, CancellationToken cancellationToken)
             {
-                return await warehouseRepository.GetWarehouses();
+                return await warehouseRepository.GetWarehousesAsync();
             }
         }
     }

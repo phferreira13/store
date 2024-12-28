@@ -14,7 +14,7 @@ public class WarehouseRepository : IWarehouseRepository
         _context = context;
     }
 
-    public async Task<Warehouse?> GetWarehouse(int id)
+    public async Task<Warehouse?> GetWarehouseAsync(int id)
     {
         return await _context.Warehouses
             .Include(x => x.Items)
@@ -22,7 +22,7 @@ public class WarehouseRepository : IWarehouseRepository
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<IEnumerable<Warehouse>> GetWarehouses()
+    public async Task<IEnumerable<Warehouse>> GetWarehousesAsync()
     {
         return await _context.Warehouses
             .Include(x => x.Items)
@@ -30,7 +30,7 @@ public class WarehouseRepository : IWarehouseRepository
             .ToListAsync();
     }
 
-    public async Task AddWarehouse(Warehouse warehouse)
+    public async Task AddWarehouseAsync(Warehouse warehouse)
     {
         try
         {
@@ -43,9 +43,9 @@ public class WarehouseRepository : IWarehouseRepository
         }
     }
 
-    public async Task UpdateWarehouse(int id, string name, string location)
+    public async Task UpdateWarehouseAsync(int id, string name, string location)
     {
-        var warehouse = await GetWarehouse(id);
+        var warehouse = await GetWarehouseAsync(id);
         if (warehouse != null)
         {
             warehouse.Update(name, location);
@@ -53,9 +53,9 @@ public class WarehouseRepository : IWarehouseRepository
         }
     }
 
-    public async Task AddItem(int warehouseId, Item item, int quantity)
+    public async Task AddItemAsync(int warehouseId, Item item, int quantity)
     {
-        var warehouse = await GetWarehouse(warehouseId);
+        var warehouse = await GetWarehouseAsync(warehouseId);
         if (warehouse != null)
         {
             warehouse.AddItem(item.Id, quantity);
@@ -63,9 +63,9 @@ public class WarehouseRepository : IWarehouseRepository
         }
     }
 
-    public async Task IncreaseItemQuantity(int warehouseId, int itemId, int quantity = 1)
+    public async Task IncreaseItemQuantityAsync(int warehouseId, int itemId, int quantity = 1)
     {
-        var warehouse = await GetWarehouse(warehouseId);
+        var warehouse = await GetWarehouseAsync(warehouseId);
         if (warehouse != null)
         {
             warehouse.IncreaseItemQuantity(itemId, quantity);
@@ -73,9 +73,9 @@ public class WarehouseRepository : IWarehouseRepository
         }
     }
 
-    public async Task DecreaseItemQuantity(int warehouseId, int itemId, int quantity = 1)
+    public async Task DecreaseItemQuantityAsync(int warehouseId, int itemId, int quantity = 1)
     {
-        var warehouse = await GetWarehouse(warehouseId);
+        var warehouse = await GetWarehouseAsync(warehouseId);
         if (warehouse != null)
         {
             warehouse.DecreaseItemQuantity(itemId, quantity);
@@ -83,9 +83,9 @@ public class WarehouseRepository : IWarehouseRepository
         }
     }
 
-    public async Task DeleteWarehouse(int id)
+    public async Task DeleteWarehouseAsync(int id)
     {
-        var warehouse = await GetWarehouse(id);
+        var warehouse = await GetWarehouseAsync(id);
         if (warehouse != null)
         {
             _context.Warehouses.Remove(warehouse);
@@ -93,7 +93,7 @@ public class WarehouseRepository : IWarehouseRepository
         }
     }
 
-    public async Task UpdateWarehouse(Warehouse warehouse)
+    public async Task UpdateWarehouseAsync(Warehouse warehouse)
     {
         _context.Warehouses.Update(warehouse);
         await _context.SaveChangesAsync();

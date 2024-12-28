@@ -4,11 +4,11 @@ namespace warehouse.service.domain.Interfaces.Repositories
 {
     public interface IItemRepository
     {
-        Task<Item?> GetItem(int id);
-        Task<IEnumerable<Item>> GetItems();
-        Task AddItem(Item item);
-        Task UpdateItem(int id, string name, decimal price, string description);
-        Task DeleteItem(int id);
-        Task UpdateItem(Item item);
+        Task<Item?> GetItemAsync(int id);
+        Task<IEnumerable<Item>> GetItemsAsync();
+        Task AddItemAsync(Item item);
+        Task UpdateItemAsync(int id, string name, decimal price, string description);
+        Task DeleteItemAsync(int id);
+        Task UpdateItemAsync(Item item);
     }
 }

@@ -23,7 +23,7 @@
                     warehouse.AddItem(item.ItemId, item.Quantity);
                 }
 
-                await warehouseRepository.AddWarehouse(warehouse);
+                await warehouseRepository.AddWarehouseAsync(warehouse);
 
                 return warehouse;
             }

@@ -11,7 +11,7 @@ public class CreateItemCommand : IRequest<Item>
         {
             var item = new Item(request.Name, request.Price, request.Description);
 
-            await itemRepository.AddItem(item);
+            await itemRepository.AddItemAsync(item);
 
             return item;
         }

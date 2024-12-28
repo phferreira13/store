@@ -14,11 +14,11 @@ public class UpdateWarehouseCommand : IRequest
     {
         public async Task Handle(UpdateWarehouseCommand request, CancellationToken cancellationToken)
         {
-            var warehouse = await warehouseRepository.GetWarehouse(request.Id)
+            var warehouse = await warehouseRepository.GetWarehouseAsync(request.Id)
                 ?? throw new Exception("Warehouse not found");
             warehouse.Update(request.Name, request.Location);
 
-            await warehouseRepository.UpdateWarehouse(warehouse);
+            await warehouseRepository.UpdateWarehouseAsync(warehouse);
         }
     }
 }

@@ -5,7 +5,7 @@ public class GetItemsQuery : IRequest<IEnumerable<Item>>
     {
         public async Task<IEnumerable<Item>> Handle(GetItemsQuery request, CancellationToken cancellationToken)
         {
-            return await itemRepository.GetItems();
+            return await itemRepository.GetItemsAsync();
         }
     }
 }

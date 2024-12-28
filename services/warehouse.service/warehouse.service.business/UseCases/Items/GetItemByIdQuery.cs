@@ -7,7 +7,7 @@ public class GetItemByIdQuery : IRequest<Item?>
     {
         public async Task<Item?> Handle(GetItemByIdQuery request, CancellationToken cancellationToken)
         {
-            return await itemRepository.GetItem(request.Id);
+            return await itemRepository.GetItemAsync(request.Id);
         }
     }
 }

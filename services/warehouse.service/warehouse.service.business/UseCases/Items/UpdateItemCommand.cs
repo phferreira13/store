@@ -15,9 +15,9 @@ public class UpdateItemCommand : IRequest
     {
         public async Task Handle(UpdateItemCommand request, CancellationToken cancellationToken)
         {
-            var item = await itemRepository.GetItem(request.Id)
+            var item = await itemRepository.GetItemAsync(request.Id)
                 ?? throw new Exception("Item not found");
-            await itemRepository.UpdateItem(request.Id, request.Name, request.Price, request.Description);
+            await itemRepository.UpdateItemAsync(request.Id, request.Name, request.Price, request.Description);
         }
     }
 }

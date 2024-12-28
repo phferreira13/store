@@ -27,7 +27,7 @@ public class ItemRepositoryTests : RepositoryInitializer
         // Arrange
         var item = ItemFactory.CreateItem();
         // Act
-        await _itemRepository.AddItem(item);
+        await _itemRepository.AddItemAsync(item);
         // Assert
         var result = await _context.Items.FirstOrDefaultAsync(x => x.Id == item.Id);
         Assert.IsNotNull(result);
@@ -39,9 +39,9 @@ public class ItemRepositoryTests : RepositoryInitializer
     {
         // Arrange
         var item = ItemFactory.CreateItem();
-        await _itemRepository.AddItem(item);
+        await _itemRepository.AddItemAsync(item);
         // Act
-        var result = await _itemRepository.GetItem(item.Id);
+        var result = await _itemRepository.GetItemAsync(item.Id);
         // Assert
         Assert.IsNotNull(result);
         Assert.AreEqual(item.Id, result?.Id);
@@ -55,10 +55,10 @@ public class ItemRepositoryTests : RepositoryInitializer
         var items = ItemFactory.CreateItems(5).ToList();
         foreach (var item in items)
         {
-            await _itemRepository.AddItem(item);
+            await _itemRepository.AddItemAsync(item);
         }
         // Act
-        var result = await _itemRepository.GetItems();
+        var result = await _itemRepository.GetItemsAsync();
         // Assert
         Assert.AreEqual(items.Count, result.Count());
     }
@@ -69,13 +69,13 @@ public class ItemRepositoryTests : RepositoryInitializer
     {
         // Arrange
         var item = ItemFactory.CreateItem();
-        await _itemRepository.AddItem(item);
+        await _itemRepository.AddItemAsync(item);
         var newName = "Updated Name";
         var newPrice = 99.99m;
         var newDescription = "Updated Description";
         // Act
-        await _itemRepository.UpdateItem(item.Id, newName, newPrice, newDescription);
-        var updatedItem = await _itemRepository.GetItem(item.Id);
+        await _itemRepository.UpdateItemAsync(item.Id, newName, newPrice, newDescription);
+        var updatedItem = await _itemRepository.GetItemAsync(item.Id);
         // Assert
         Assert.IsNotNull(updatedItem);
         Assert.AreEqual(newName, updatedItem?.Name);
@@ -89,10 +89,10 @@ public class ItemRepositoryTests : RepositoryInitializer
     {
         // Arrange
         var item = ItemFactory.CreateItem();
-        await _itemRepository.AddItem(item);
+        await _itemRepository.AddItemAsync(item);
         // Act
-        await _itemRepository.DeleteItem(item.Id);
-        var result = await _itemRepository.GetItem(item.Id);
+        await _itemRepository.DeleteItemAsync(item.Id);
+        var result = await _itemRepository.GetItemAsync(item.Id);
         // Assert
         Assert.IsNull(result);
     }
@@ -105,7 +105,7 @@ public class ItemRepositoryTests : RepositoryInitializer
         // Arrange
         var expected = 0;
         // Act
-        var items = await _itemRepository.GetItems();
+        var items = await _itemRepository.GetItemsAsync();
         // Assert
         Assert.AreEqual(expected, items.Count());
     }

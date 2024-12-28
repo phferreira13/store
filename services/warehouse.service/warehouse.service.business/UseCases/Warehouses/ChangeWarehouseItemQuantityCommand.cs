@@ -12,7 +12,7 @@
 
             public async Task<Warehouse> Handle(ChangeWarehouseItemQuantityCommand request, CancellationToken cancellationToken)
             {
-                var warehouse = await warehouseRepository.GetWarehouse(request._warehouseId);
+                var warehouse = await warehouseRepository.GetWarehouseAsync(request._warehouseId);
                 if (warehouse == null)
                 {
                     throw new ArgumentException($"Warehouse with id {request._warehouseId} not found");
@@ -27,20 +27,20 @@
                     }
                     else
                     {
-                        var itemEntity = await itemRepository.GetItem(request.ItemId)
+                        var itemEntity = await itemRepository.GetItemAsync(request.ItemId)
                             ?? throw new ArgumentException($"Item with id {request.ItemId} not found");
-                        await warehouseRepository.AddItem(request._warehouseId, itemEntity, request.Quantity);
+                        await warehouseRepository.AddItemAsync(request._warehouseId, itemEntity, request.Quantity);
                         return warehouse;
                     }
                 }
 
                 if (request.Quantity < 0)
                 {
-                    await warehouseRepository.DecreaseItemQuantity(request._warehouseId, request.ItemId, Math.Abs(request.Quantity));
+                    await warehouseRepository.DecreaseItemQuantityAsync(request._warehouseId, request.ItemId, Math.Abs(request.Quantity));
                 }
                 else
                 {
-                    await warehouseRepository.IncreaseItemQuantity(request._warehouseId, request.ItemId, request.Quantity);
+                    await warehouseRepository.IncreaseItemQuantityAsync(request._warehouseId, request.ItemId, request.Quantity);
                 }
                 
 

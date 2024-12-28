@@ -66,7 +66,7 @@
 
         public WarehouseItem? GetWarehouseItem(int itemId)
         {
-            return Items.FirstOrDefault(i => i.Item.Id == itemId);
+            return Items.FirstOrDefault(i => i.ItemId == itemId);
         }
     }
 }

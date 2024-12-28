@@ -29,7 +29,7 @@ public class WarehouseRepositoryTests : RepositoryInitializer
         await _context.Warehouses.AddAsync(warehouse);
         await _context.SaveChangesAsync();
         // Act
-        var result = await _warehouseRepository.GetWarehouse(warehouse.Id);
+        var result = await _warehouseRepository.GetWarehouseAsync(warehouse.Id);
         // Assert
         Assert.IsNotNull(result);
         Assert.AreEqual(warehouse.Id, result?.Id);
@@ -41,10 +41,12 @@ public class WarehouseRepositoryTests : RepositoryInitializer
     {
         // Arrange
         var warehouses = WarehouseFactory.CreateWarehouses(5).ToList();
-        await _context.Warehouses.AddRangeAsync(warehouses);
-        await _context.SaveChangesAsync();
+        foreach (var warehouse in warehouses)
+        {
+            await _warehouseRepository.AddWarehouseAsync(warehouse);
+        }
         // Act
-        var result = await _warehouseRepository.GetWarehouses();
+        var result = await _warehouseRepository.GetWarehousesAsync();
         // Assert
         Assert.AreEqual(warehouses.Count, result.Count());
     }
@@ -56,7 +58,7 @@ public class WarehouseRepositoryTests : RepositoryInitializer
         // Arrange
         var warehouse = WarehouseFactory.CreateWarehouse();
         // Act
-        await _warehouseRepository.AddWarehouse(warehouse);
+        await _warehouseRepository.AddWarehouseAsync(warehouse);
         // Assert
         var result = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == warehouse.Id);
         Assert.IsNotNull(result);
@@ -68,13 +70,12 @@ public class WarehouseRepositoryTests : RepositoryInitializer
     {
         // Arrange
         var warehouse = WarehouseFactory.CreateWarehouse();
-        await _context.Warehouses.AddAsync(warehouse);
-        await _context.SaveChangesAsync();
+        await _warehouseRepository.AddWarehouseAsync(warehouse);
         var newName = "Updated Name";
         var newLocation = "Updated Location";
         // Act
-        await _warehouseRepository.UpdateWarehouse(warehouse.Id, newName, newLocation);
-        var updatedWarehouse = await _warehouseRepository.GetWarehouse(warehouse.Id);
+        await _warehouseRepository.UpdateWarehouseAsync(warehouse.Id, newName, newLocation);
+        var updatedWarehouse = await _warehouseRepository.GetWarehouseAsync(warehouse.Id);
         // Assert
         Assert.IsNotNull(updatedWarehouse);
         Assert.AreEqual(newName, updatedWarehouse?.Name);
@@ -87,13 +88,12 @@ public class WarehouseRepositoryTests : RepositoryInitializer
     {
         // Arrange
         var warehouse = WarehouseFactory.CreateWarehouse();
-        await _context.Warehouses.AddAsync(warehouse);
-        await _context.SaveChangesAsync();
+        await _warehouseRepository.AddWarehouseAsync(warehouse);
         var item = ItemFactory.CreateItem();
         var quantity = 10;
         // Act
-        await _warehouseRepository.AddItem(warehouse.Id, item, quantity);
-        var updatedWarehouse = await _warehouseRepository.GetWarehouse(warehouse.Id);
+        await _warehouseRepository.AddItemAsync(warehouse.Id, item, quantity);
+        var updatedWarehouse = await _warehouseRepository.GetWarehouseAsync(warehouse.Id);
         // Assert
         Assert.IsNotNull(updatedWarehouse);
         var warehouseItem = updatedWarehouse?.Items.FirstOrDefault(x => x.ItemId == item.Id);
@@ -107,15 +107,14 @@ public class WarehouseRepositoryTests : RepositoryInitializer
     {
         // Arrange
         var warehouse = WarehouseFactory.CreateWarehouse();
-        await _context.Warehouses.AddAsync(warehouse);
-        await _context.SaveChangesAsync();
+        await _warehouseRepository.AddWarehouseAsync(warehouse);
         var item = ItemFactory.CreateItem();
         var initialQuantity = 5;
-        await _warehouseRepository.AddItem(warehouse.Id, item, initialQuantity);
+        await _warehouseRepository.AddItemAsync(warehouse.Id, item, initialQuantity);
         var increaseQuantity = 10;
         // Act
-        await _warehouseRepository.IncreaseItemQuantity(warehouse.Id, item.Id, increaseQuantity);
-        var updatedWarehouse = await _warehouseRepository.GetWarehouse(warehouse.Id);
+        await _warehouseRepository.IncreaseItemQuantityAsync(warehouse.Id, item.Id, increaseQuantity);
+        var updatedWarehouse = await _warehouseRepository.GetWarehouseAsync(warehouse.Id);
         // Assert
         Assert.IsNotNull(updatedWarehouse);
         var warehouseItem = updatedWarehouse?.Items.FirstOrDefault(x => x.ItemId == item.Id);
@@ -129,15 +128,14 @@ public class WarehouseRepositoryTests : RepositoryInitializer
     {
         // Arrange
         var warehouse = WarehouseFactory.CreateWarehouse();
-        await _context.Warehouses.AddAsync(warehouse);
-        await _context.SaveChangesAsync();
+        await _warehouseRepository.AddWarehouseAsync(warehouse);
         var item = ItemFactory.CreateItem();
         var initialQuantity = 15;
-        await _warehouseRepository.AddItem(warehouse.Id, item, initialQuantity);
+        await _warehouseRepository.AddItemAsync(warehouse.Id, item, initialQuantity);
         var decreaseQuantity = 5;
         // Act
-        await _warehouseRepository.DecreaseItemQuantity(warehouse.Id, item.Id, decreaseQuantity);
-        var updatedWarehouse = await _warehouseRepository.GetWarehouse(warehouse.Id);
+        await _warehouseRepository.DecreaseItemQuantityAsync(warehouse.Id, item.Id, decreaseQuantity);
+        var updatedWarehouse = await _warehouseRepository.GetWarehouseAsync(warehouse.Id);
         // Assert
         Assert.IsNotNull(updatedWarehouse);
         var warehouseItem = updatedWarehouse?.Items.FirstOrDefault(x => x.ItemId == item.Id);
@@ -151,26 +149,11 @@ public class WarehouseRepositoryTests : RepositoryInitializer
     {
         // Arrange
         var warehouse = WarehouseFactory.CreateWarehouse();
-        await _context.Warehouses.AddAsync(warehouse);
-        await _context.SaveChangesAsync();
+        await _warehouseRepository.AddWarehouseAsync(warehouse);
         // Act
-        await _warehouseRepository.DeleteWarehouse(warehouse.Id);
-        var result = await _warehouseRepository.GetWarehouse(warehouse.Id);
+        await _warehouseRepository.DeleteWarehouseAsync(warehouse.Id);
+        var result = await _warehouseRepository.GetWarehouseAsync(warehouse.Id);
         // Assert
         Assert.IsNull(result);
-    }
-}
-
-public static class WarehouseFactory
-{
-    public static Warehouse CreateWarehouse()
-    {
-        var faker = new Faker();
-        return new Warehouse(faker.Company.CompanyName(), faker.Address.FullAddress());
-    }
-
-    public static IEnumerable<Warehouse> CreateWarehouses(int count)
-    {
-        return Enumerable.Range(0, count).Select(_ => CreateWarehouse());
     }
 }

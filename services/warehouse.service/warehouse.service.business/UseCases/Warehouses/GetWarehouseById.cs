@@ -7,7 +7,7 @@ public class GetWarehouseById : IRequest<Warehouse?>
     {
         public async Task<Warehouse?> Handle(GetWarehouseById request, CancellationToken cancellationToken)
         {
-            return await warehouseRepository.GetWarehouse(request.Id);
+            return await warehouseRepository.GetWarehouseAsync(request.Id);
         }
     }
 }
