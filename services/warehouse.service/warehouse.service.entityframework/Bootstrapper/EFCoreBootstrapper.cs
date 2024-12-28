@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using warehouse.service.entityframework.Context;
 
 namespace warehouse.service.entityframework.Bootstrapper;
@@ -21,6 +22,20 @@ public static class EFCoreBootstrapper
     {
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<WarehouseContext>();
-        context.Database.Migrate();
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<WarehouseContext>>();
+        try
+        {
+            logger.LogInformation("Applying migration");
+            context.Database.Migrate();
+            logger.LogInformation("Migration applied");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "An error occurred while migrating the database");
+            Console.WriteLine(ex.Message);
+        }
+
+
+
     }
 }
