@@ -1,5 +1,5 @@
 ﻿using warehouse.service.domain.Interfaces.Repositories;
-using warehouse.service.entityframewor.Repositories;
+using warehouse.service.entityframework.Repositories;
 
 namespace warehouse.service.api.Ioc
 {

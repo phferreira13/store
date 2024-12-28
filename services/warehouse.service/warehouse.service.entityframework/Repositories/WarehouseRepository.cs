@@ -3,7 +3,7 @@ using warehouse.service.domain.Interfaces.Repositories;
 using warehouse.service.domain.Models;
 using warehouse.service.entityframework.Context;
 
-namespace warehouse.service.entityframewor.Repositories;
+namespace warehouse.service.entityframework.Repositories;
 
 public class WarehouseRepository : IWarehouseRepository
 {
