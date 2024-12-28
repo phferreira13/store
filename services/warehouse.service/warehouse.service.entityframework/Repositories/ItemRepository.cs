@@ -52,13 +52,14 @@ public class ItemRepository : IItemRepository
 
     public async Task DeleteItem(int id)
     {
-        var item = await GetItem(id);
+        var item = await _context.Items.FindAsync(id);
         if (item != null)
         {
             _context.Items.Remove(item);
             await _context.SaveChangesAsync();
         }
     }
+
 
     public async Task UpdateItem(Item item)
     {

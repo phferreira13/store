@@ -26,23 +26,15 @@ public abstract class RepositoryInitializer
     }
 
     [AttributeUsage(AttributeTargets.Method, Inherited = true)]
-    public class ClearDataBaseAttribute : Attribute
+    protected class ClearDataBaseAttribute : Attribute
     {
         // if has this attribute, need call RepositoryInitializer.ClearDatabase() before test
-    }
-}
-
-public class TestMethodInterceptor : Attribute
-{
-    public void Invoke(MethodInfo method, object instance)
-    {
-        var clearDatabaseAttribute = method.GetCustomAttribute<RepositoryInitializer.ClearDataBaseAttribute>();
-        if (clearDatabaseAttribute != null)
+        public void Invoke(MethodInfo method, object instance)
         {
             var repositoryInitializer = instance as RepositoryInitializer;
             repositoryInitializer?.ClearDatabase();
+            method.Invoke(instance, null);
         }
-
-        method.Invoke(instance, null);
     }
 }
+

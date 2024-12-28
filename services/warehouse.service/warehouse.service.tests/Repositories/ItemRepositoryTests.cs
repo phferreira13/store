@@ -96,4 +96,17 @@ public class ItemRepositoryTests : RepositoryInitializer
         // Assert
         Assert.IsNull(result);
     }
+
+    //Test ClearDataBaseAttribute
+    [TestMethod]
+    [ClearDataBase]
+    public async Task ClearDataBaseAttribute_ShouldClearDataBase()
+    {
+        // Arrange
+        var expected = 0;
+        // Act
+        var items = await _itemRepository.GetItems();
+        // Assert
+        Assert.AreEqual(expected, items.Count());
+    }
 }
